@@ -16,8 +16,7 @@ bot.onText(/\/start/, (msg) => {
     const chatId = msg.chat.id;
     const keyboard = {
         inline_keyboard: [
-            [{ text: 'Play Castle Survivor', callback_data: 'game' }],
-            [{ text: 'Visit Website', url: 'https://yourwebsite.com' }], // replace with your website URL
+            [{ text: 'Play Castle Survivor', url: 'https://likepenza1.github.io/CastleSurvivor/' }, { text: 'Visit Website', url: 'https://yourwebsite.com' }], // replace with your game and website URLs
             [{ text: 'Invite Friend', url: 'https://telegram.me/share/url?url=Join%20me%20in%20this%20great%20game!&text=Check%20out%20this%20awesome%20game%20on%20Telegram!' }] // replace with your invite URL
         ]
     };
@@ -25,12 +24,6 @@ bot.onText(/\/start/, (msg) => {
 });
 
 bot.onText(/\/help/, (msg) => bot.sendMessage(msg.from.id, "Click the buttons below to play the game, visit the website, or invite a friend."));
-
-bot.on("callback_query", function (query) {
-    if (query.data === 'game') {
-        bot.sendGame(query.message.chat.id, gameName);
-    }
-});
 
 bot.on("inline_query", function (iq) {
     bot.answerInlineQuery(iq.id, [{
