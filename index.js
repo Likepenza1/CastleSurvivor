@@ -29,7 +29,10 @@ bot.onText(/start|game/, (msg) => {
 
 bot.on("callback_query", function (query) {
     if (query.data === 'game') {
-        bot.sendGame(query.from.id, gameName);
+        let gameurl = "https://likepenza1.github.io/CastleSurvivor/";
+        bot.answerCallbackQuery(query.id, {
+            url: gameurl
+        });
     } else if (query.data === 'invite') {
         // Add your code for invite friends here
         bot.answerCallbackQuery(query.id, "Invite friends functionality is not implemented yet.");
