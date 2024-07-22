@@ -7,7 +7,7 @@ const bot = new TelegramBot(TOKEN, {
     polling: true
 });
 const port = process.env.PORT || 5000;
-const gameName = "CastleSurvivorV2";
+const gameName = "CastleSurvivor";
 const queries = {};
 
 server.use(express.static(path.join(__dirname, 'CastleSurvivorV2')));
