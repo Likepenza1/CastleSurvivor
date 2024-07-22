@@ -11,7 +11,16 @@ const gameName = "CastleSurvivor";
 const queries = {};
 server.use(express.static(path.join(__dirname, 'CastleSurvivorV2')));
 bot.onText(/help/, (msg) => bot.sendMessage(msg.from.id, "Say /game if you want to play."));
-bot.onText(/start|game/, (msg) => bot.sendGame(msg.from.id, gameName));
+bot.onText(/start|game/, (msg) => bot.sendGame(msg.from.id, gameName))
+const options = {
+    reply_markup: {
+        inline_keyboard: [
+            [{ text: 'Play Castle Survival', bot.sendGame(msg.from.id, gameName) }],
+            [{ text: 'Invite Friends', callback_data: 'invite' }, { text: 'Top Up Balance', callback_data: 'balance' }],
+            [{ text: 'Shop', callback_data: 'shop' }, { text: 'News', callback_data: 'news' }]
+        ]
+    }
+};;
 bot.on("callback_query", function (query) 
 {
     if (query.game_short_name !== gameName) 
@@ -20,16 +29,6 @@ bot.on("callback_query", function (query)
     }
     else 
     {
-        (msg) => {
-            const options = {
-                reply_markup: {
-                    inline_keyboard: [
-                        [{ text: 'Play Castle Survival', bot.sendGame(msg.from.id, gameName) }],
-                        [{ text: 'Invite Friends', callback_data: 'invite' }, { text: 'Top Up Balance', callback_data: 'balance' }],
-                        [{ text: 'Shop', callback_data: 'shop' }, { text: 'News', callback_data: 'news' }]
-                    ]
-                }
-            };
         queries[query.id] = query;
         let gameurl = "https://likepenza1.github.io/CastleSurvivor/";
         bot.answerCallbackQuery({
