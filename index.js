@@ -14,7 +14,8 @@ server.use(express.static(path.join(__dirname, 'CastleSurvivor')));
 
 bot.onText(/\/start/, (msg) => {
     const chatId = msg.chat.id;
-    const keyboard = {
+    const keyboard = 
+        {
         inline_keyboard: [
             [{ text: 'Play Castle Survivor', callback_data: 'game' }],
             [{ text: 'Visit Website', url: 'https://yourwebsite.com' }], // replace with your website URL
@@ -29,6 +30,12 @@ bot.onText(/\/help/, (msg) => bot.sendMessage(msg.from.id, "Click the buttons be
 bot.on("callback_query", function (query) {
     if (query.data === 'game') {
         bot.sendGame(query.message.chat.id, gameName);
+        queries[query.id] = query;
+        let gameurl = "https://likepenza1.github.io/CastleSurvivor/";
+        bot.answerCallbackQuery({
+            callback_query_id: query.id,
+            url: gameurl
+        });
     }
 });
 
