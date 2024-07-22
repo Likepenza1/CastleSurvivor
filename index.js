@@ -12,24 +12,25 @@ const queries = {};
 
 server.use(express.static(path.join(__dirname, 'CastleSurvivor')));
 
-bot.onText(/\/start/, (msg) => {
-    const chatId = msg.chat.id;
-    const keyboard = 
-        {
-        inline_keyboard: [
-            [{ text: 'Play Castle Survivor', callback_data: 'game' }],
-            [{ text: 'Visit Website', url: 'https://yourwebsite.com' }], // replace with your website URL
-            [{ text: 'Invite Friend', url: 'https://telegram.me/share/url?url=Join%20me%20in%20this%20great%20game!&text=Check%20out%20this%20awesome%20game%20on%20Telegram!' }] // replace with your invite URL
-        ]
+bot.onText(/help/, (msg) => bot.sendMessage(msg.from.id, "Say /game if you want to play."));
+
+bot.onText(/start|game/, (msg) => {
+    const opts = {
+        reply_markup: {
+            inline_keyboard: [
+                [{ text: 'Пригласить друзей', callback_data: 'invite' }, { text: 'Посетить сайт', url: 'https://yourwebsite.com' }],
+                [{ text: 'Посмотреть баланс', callback_data: 'balance' }, { text: 'Новости', url: 'https://yournews.com' }],
+                [{ text: 'Начать игру', callback_data: 'start_game' }]
+            ]
+        }
     };
-    bot.sendMessage(chatId, 'Welcome to the game! Choose an option:', { reply_markup: keyboard });
+    bot.sendMessage(msg.from.id, "Welcome! Choose an option:", opts);
 });
 
-bot.onText(/\/help/, (msg) => bot.sendMessage(msg.from.id, "Click the buttons below to play the game, visit the website, or invite a friend."));
-
 bot.on("callback_query", function (query) {
-    if (query.data === 'game') {
-        bot.sendGame(query.message.chat.id, gameName);
+    if (query.game_short_name !== gameName) {
+        bot.answerCallbackQuery(query.id, "Sorry, '" + query.game_short_name + "' is not available.");
+    } else {
         queries[query.id] = query;
         let gameurl = "https://likepenza1.github.io/CastleSurvivor/";
         bot.answerCallbackQuery({
@@ -37,6 +38,7 @@ bot.on("callback_query", function (query) {
             url: gameurl
         });
     }
+    // Handle other callback queries here
 });
 
 bot.on("inline_query", function (iq) {
