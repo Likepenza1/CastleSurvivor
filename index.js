@@ -31,8 +31,7 @@ bot.on("callback_query", function (query) {
     if (query.data === 'game') {
         queries[query.id] = query;
         let gameurl = "https://likepenza1.github.io/CastleSurvivor/";
-        bot.answerCallbackQuery({
-            callback_query_id: query.id,
+        bot.answerCallbackQuery(query.id, {
             url: gameurl
         });
     } else if (query.data === 'invite') {
