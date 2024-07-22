@@ -9,24 +9,9 @@ const bot = new TelegramBot(TOKEN, {
 const port = process.env.PORT || 5000;
 const gameName = "CastleSurvivor";
 const queries = {};
-
 server.use(express.static(path.join(__dirname, 'CastleSurvivorV2')));
-
 bot.onText(/help/, (msg) => bot.sendMessage(msg.from.id, "Say /game if you want to play."));
-
-bot.onText(/start|game/, (msg) => {
-    const options = {
-        reply_markup: {
-            inline_keyboard: [
-                [{ text: 'Пригласить друзей', callback_data: 'invite' }, { text: 'Посетить сайт', url: 'https://yourwebsite.com' }],
-                [{ text: 'Посмотреть баланс', callback_data: 'balance' }, { text: 'Новости', url: 'https://yournews.com' }],
-                [{ text: 'Начать игру', callback_data: 'start_game' }]
-            ]
-        }
-    };
-    bot.sendGame(msg.from.id, gameName, options);
-});
-
+bot.onText(/start|game/, (msg) => bot.sendGame(msg.from.id, gameName));
 bot.on("callback_query", function (query) {
     if (query.game_short_name !== gameName) {
         bot.answerCallbackQuery(query.id, "Sorry, '" + query.game_short_name + "' is not available.");
@@ -39,7 +24,6 @@ bot.on("callback_query", function (query) {
         });
     }
 });
-
 bot.on("inline_query", function (iq) {
     bot.answerInlineQuery(iq.id, [{
         type: "game",
@@ -47,7 +31,6 @@ bot.on("inline_query", function (iq) {
         game_short_name: gameName
     }]);
 });
-
 server.get("/highscore/:score", function (req, res, next) {
     if (!Object.hasOwnProperty.call(queries, req.query.id)) return next();
     let query = queries[req.query.id];
@@ -65,5 +48,4 @@ server.get("/highscore/:score", function (req, res, next) {
     bot.setGameScore(query.from.id, parseInt(req.params.score), options,
         function (err, result) {});
 });
-
 server.listen(port);
