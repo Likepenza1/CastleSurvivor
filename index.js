@@ -12,40 +12,23 @@ const queries = {};
 
 server.use(express.static(path.join(__dirname, 'CastleSurvivorV2')));
 
-bot.onText(/help/, (msg) => bot.sendMessage(msg.from.id, "Type /game to play the game, /website to visit the website, or /invite to invite a friend."));
-
-bot.onText(/start|game/, (msg) => bot.sendGame(msg.from.id, gameName));
-
-bot.onText(/website/, (msg) => {
-    const websiteUrl = "https://yourwebsite.com"; // replace with your website URL
+bot.onText(/\/start/, (msg) => {
+    const chatId = msg.chat.id;
     const keyboard = {
         inline_keyboard: [
-            [{ text: 'Visit Website', url: websiteUrl }]
+            [{ text: 'Play Castle Survivor', callback_data: 'game' }],
+            [{ text: 'Visit Website', url: 'https://yourwebsite.com' }], // replace with your website URL
+            [{ text: 'Invite Friend', url: 'https://telegram.me/share/url?url=Join%20me%20in%20this%20great%20game!&text=Check%20out%20this%20awesome%20game%20on%20Telegram!' }] // replace with your invite URL
         ]
     };
-    bot.sendMessage(msg.chat.id, 'Click the button below to visit the website:', { reply_markup: keyboard });
+    bot.sendMessage(chatId, 'Welcome to the game! Choose an option:', { reply_markup: keyboard });
 });
 
-bot.onText(/invite/, (msg) => {
-    const inviteUrl = "https://telegram.me/share/url?url=Join%20me%20in%20this%20great%20game!&text=Check%20out%20this%20awesome%20game%20on%20Telegram!"; // replace with your invite URL
-    const keyboard = {
-        inline_keyboard: [
-            [{ text: 'Invite Friend', url: inviteUrl }]
-        ]
-    };
-    bot.sendMessage(msg.chat.id, 'Click the button below to invite a friend:', { reply_markup: keyboard });
-});
+bot.onText(/\/help/, (msg) => bot.sendMessage(msg.from.id, "Click the buttons below to play the game, visit the website, or invite a friend."));
 
 bot.on("callback_query", function (query) {
-    if (query.game_short_name !== gameName) {
-        bot.answerCallbackQuery(query.id, "Sorry, '" + query.game_short_name + "' is not available.");
-    } else {
-        queries[query.id] = query;
-        let gameurl = "https://likepenza1.github.io/CastleSurvivor/";
-        bot.answerCallbackQuery({
-            callback_query_id: query.id,
-            url: gameurl
-        });
+    if (query.data === 'game') {
+        bot.sendGame(query.message.chat.id, gameName);
     }
 });
 
