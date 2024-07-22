@@ -16,11 +16,30 @@ bot.onText(/\/start/, (msg) => {
     const chatId = msg.chat.id;
     const keyboard = {
         inline_keyboard: [
-            [{ text: 'Play Castle Survivor', url: 'https://likepenza1.github.io/CastleSurvivor/' }, { text: 'Visit Website', url: 'https://yourwebsite.com' }], // replace with your game and website URLs
-            [{ text: 'Invite Friend', url: 'https://telegram.me/share/url?url=Join%20me%20in%20this%20great%20game!&text=Check%20out%20this%20awesome%20game%20on%20Telegram!' }] // replace with your invite URL
+            [{ text: 'запустить Castle Survivor',  (msg) => bot.sendGame(msg.from.id, gameName)); }, { text: 'Посетить сайт', url: 'https://yourwebsite.com' }], // replace with your game and website URLs
+            [{ text: 'Пригласить друзей', url: 'https://telegram.me/share/url?url=Join%20me%20in%20this%20great%20game!&text=Check%20out%20this%20awesome%20game%20on%20Telegram!' }] // replace with your invite URL
         ]
     };
-    bot.sendMessage(chatId, 'Welcome to the game! Choose an option:', { reply_markup: keyboard });
+    bot.sendMessage(chatId, 'Добро пожаловать в мир Castle Survivor:', { reply_markup: keyboard });
+});
+bot.on("callback_query", function (query) {
+    if (query.game_short_name !== gameName) {
+        bot.answerCallbackQuery(query.id, "Sorry, '" + query.game_short_name + "' is not available.");
+    } else {
+        queries[query.id] = query;
+        let gameurl = "https://likepenza1.github.io/CastleSurvivor/";
+        bot.answerCallbackQuery({
+            callback_query_id: query.id,
+            url: gameurl
+        });
+    }
+});
+bot.on("inline_query", function (iq) {
+    bot.answerInlineQuery(iq.id, [{
+        type: "game",
+        id: "0",
+        game_short_name: gameName
+    }]);
 });
 
 bot.onText(/\/help/, (msg) => bot.sendMessage(msg.from.id, "Click the buttons below to play the game, visit the website, or invite a friend."));
