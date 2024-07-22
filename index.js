@@ -10,7 +10,7 @@ const port = process.env.PORT || 5000;
 const gameName = "CastleSurvivor";
 const queries = {};
 server.use(express.static(path.join(__dirname, 'CastleSurvivorV2')));
-bot.onText(/help/, (msg) => bot.sendMessage(msg.from.id, "Say /game if you want to play."));
+bot.onText(/help/, (msg) => bot.sendMessage(msg.from.id, "напиши /game чтобы отобразить игру"));
 bot.onText(/start|game/, (msg) => bot.sendGame(msg.from.id, gameName));
 bot.on("callback_query", function (query) {
     if (query.game_short_name !== gameName) {

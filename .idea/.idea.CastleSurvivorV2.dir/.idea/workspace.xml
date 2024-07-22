@@ -6,6 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="1d316254-628e-4510-8100-6afa3642ffe8" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.CastleSurvivorV2.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.CastleSurvivorV2.dir/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/index.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -14,6 +16,9 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/package-lock.json" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -59,6 +64,8 @@
       <workItem from="1721456950974" duration="713000" />
       <workItem from="1721467615496" duration="539000" />
       <workItem from="1721468776794" duration="77000" />
+      <workItem from="1721469983459" duration="112000" />
+      <workItem from="1721639955437" duration="300000" />
     </task>
     <servers />
   </component>
