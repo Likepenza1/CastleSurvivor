@@ -2,7 +2,7 @@ import asyncio
 import telegram
 
 async def main():
-    bot = telegram.Bot(token='7481755266:AAH-TQrdMSruOHliUsHiXQUsoVE9cZnH_FI')
+    bot = telegram.Bot(token='7383514055:AAG6zoxC3GjdM0g6DVdJiACucVaTzYcQp4c')
     updates = await bot.get_updates()
 
     if updates:
