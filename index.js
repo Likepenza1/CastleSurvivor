@@ -1,7 +1,7 @@
 const express = require("express");
 const path = require("path");
 const TelegramBot = require("node-telegram-bot-api");
-const TOKEN = "7383514055:AAG6zoxC3GjdM0g6DVdJiACucVaTzYcQp4c";
+const TOKEN = "7383514055:AAG6Kg93Lra_Unq3TmIYkzuAlPhp75J9vP0";
 const server = express();
 const bot = new TelegramBot(TOKEN, {
     polling: true
