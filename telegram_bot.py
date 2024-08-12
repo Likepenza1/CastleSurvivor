@@ -9,7 +9,7 @@ async def main():
         update = updates[-1]
         username = update.message.from_user.username
 
-        with open('username.txt', 'w') as f:
+        with open('tgname.txt', 'w') as f:
             f.write(username)
     else:
         print("No updates available.")
